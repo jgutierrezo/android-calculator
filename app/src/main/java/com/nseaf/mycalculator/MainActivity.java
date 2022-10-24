@@ -43,6 +43,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public void piClicked(View view) {
+        calculator.piPressed();
+
+        updateCalcUI();
+    }
+
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public void operationClicked(View view){
         switch (view.getId()){
             case R.id.b_addition: calculator.processOperation("+"); break;
@@ -50,6 +59,8 @@ public class MainActivity extends AppCompatActivity {
             case R.id.b_equal: calculator.processOperation("="); break;
             case R.id.b_multiply: calculator.processOperation("×"); break;
             case R.id.b_div: calculator.processOperation("÷"); break;
+
+            case R.id.b_e_to_x: calculator.processE(); break;
         }
         updateCalcUI();
     }

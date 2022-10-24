@@ -33,7 +33,6 @@ public class Calculator {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void processNumber(String i) {
-        Log.d("Operation", operation);
 
         if(numberString.length()<12) {  // limit of 12 digits
 
@@ -65,8 +64,12 @@ public class Calculator {
         }
 
 
-        if(containsOperator()){
-            detailsString = detailsString.substring(0, detailsString.indexOf(operation)+1);
+        if(containsOperator(detailsString)){
+            if(detailsString.charAt(0) == '-' && containsOperator(detailsString.substring(1))){
+                detailsString = detailsString.substring(0, detailsString.substring(1).indexOf(operation)+2);
+            }else{
+                detailsString = detailsString.substring(0, detailsString.indexOf(operation)+1);
+            }
             detailsString +=  String.valueOf(nextNumInScreen);
         }else{
             detailsString = String.valueOf(nextNumInScreen);
@@ -75,16 +78,17 @@ public class Calculator {
 
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    private boolean containsOperator() {
+    private boolean containsOperator(String strToCheck) {
 
 
         String[] operators = {"+", "-", "÷", "×"};
 
-        return Arrays.stream(operators).anyMatch(detailsString::contains);
+        return Arrays.stream(operators).anyMatch(strToCheck::contains);
 
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public void processOperation(String operation) {
 
         this.operation = operation;
@@ -101,11 +105,32 @@ public class Calculator {
             result();
             num2 = "";
             numberString = String.valueOf(num1);
-
-            detailsString += " = " + num1;
+            if(minusIsUsedAsNegative()){
+                detailsString += " " + operation;
+            }else{
+                detailsString += " = " + num1;
+            }
         }
 
 
+    }
+
+    public void processE() {
+        String eToXResult = eOperation();
+        numberString = eToXResult;
+        detailsString = eToXResult;
+    }
+
+    private String eOperation() {
+        return getDoubleWithFormat(Math.pow(2.71828, Double.valueOf(numberString)));
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private boolean minusIsUsedAsNegative() {
+        if(detailsString.charAt(0) == '-' && detailsString.length() >= 2 && !containsOperator(detailsString.substring(1))){
+            return true;
+        }
+        return false;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -114,42 +139,27 @@ public class Calculator {
         Double defFormatResult = new Double(0);
         if(detailsString.contains("+")){
             defFormatResult = Double.valueOf(num1) + Double.valueOf(num2);
-        }
-
-        if(detailsString.contains("-")){
-            defFormatResult = Double.valueOf(num1) - Double.valueOf(num2);
-        }
-
-        if(detailsString.contains("÷")){
+        }else if(detailsString.contains("÷")){
             defFormatResult = Double.valueOf(num1) / Double.valueOf(num2);
-        }
-
-        if(detailsString.contains("×")){
+        }else if(detailsString.contains("×")){
             defFormatResult = Double.valueOf(num1) * Double.valueOf(num2);
+        }else if(detailsString.contains("-")){
+            defFormatResult = Double.valueOf(num1) - Double.valueOf(num2);
         }
 
         //Check if it has radix
         if(defFormatResult % 1 == 0)
             num1 = String.valueOf(defFormatResult.intValue());
         else{
-            DecimalFormat df = new DecimalFormat();
-            df.setMaximumFractionDigits(2);
-            num1 = df.format(defFormatResult).toString();
+
+            num1 = getDoubleWithFormat(defFormatResult);
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    @NonNull
-    private boolean isInteger(String strResult) {
-
-        String strAfterRadixPoint = strResult.substring(strResult.indexOf(".") + 1);
-        long timesCeroAppear =  strAfterRadixPoint.chars().filter(c -> c == '0').count();
-
-        if(strAfterRadixPoint.length() == timesCeroAppear )
-        return true;
-
-        return false;
-
+    private String getDoubleWithFormat(Double d){
+        DecimalFormat df = new DecimalFormat();
+        df.setMaximumFractionDigits(2);
+        return df.format(d);
     }
 
     public void clearClicked() {
@@ -180,4 +190,7 @@ public class Calculator {
         }
     }
 
+    public void piPressed() {
+        
+    }
 }
