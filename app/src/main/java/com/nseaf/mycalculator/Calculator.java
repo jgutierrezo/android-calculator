@@ -108,15 +108,6 @@ public class Calculator {
 
     }
 
-    public void processEqual() {
-
-        num2 = numberString;
-        result();
-        num2 = "";
-        numberString = String.valueOf(num1);
-        detailsString += " = " + num1;
-
-    }
     private void result() {
         if(num1.contains(".") || num2.contains(".")){
             num1 = String.valueOf(Double.valueOf(num1) + Double.valueOf(num2));

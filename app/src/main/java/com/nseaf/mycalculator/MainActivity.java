@@ -51,11 +51,6 @@ public class MainActivity extends AppCompatActivity {
         updateCalcUI();
     }
 
-    public void equalClicked(View view){
-        calculator.processEqual();
-        updateCalcUI();
-    }
-
     private void updateCalcUI() {
         tvNumber.setText(calculator.numberString);
         tvDetails.setText(calculator.detailsString);
