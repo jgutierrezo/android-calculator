@@ -138,6 +138,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toRightOf="@id/b_pi"
             app:layout_constraintRight_toRightOf="parent"
+            android:onClick="operationClicked"
             android:text="	÷	"
             />
 
@@ -185,6 +186,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintLeft_toRightOf="@id/b_9"
                 app:layout_constraintRight_toRightOf="parent"
+                android:onClick="operationClicked"
                 android:text="×"
                 />
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -231,6 +233,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toRightOf="@id/b_6"
             app:layout_constraintRight_toRightOf="parent"
+            android:onClick="operationClicked"
             android:text="-"
             />
     </androidx.constraintlayout.widget.ConstraintLayout>

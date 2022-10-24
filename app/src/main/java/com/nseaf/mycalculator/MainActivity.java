@@ -46,7 +46,10 @@ public class MainActivity extends AppCompatActivity {
     public void operationClicked(View view){
         switch (view.getId()){
             case R.id.b_addition: calculator.processOperation("+"); break;
+            case R.id.b_subtract: calculator.processOperation("-"); break;
             case R.id.b_equal: calculator.processOperation("="); break;
+            case R.id.b_multiply: calculator.processOperation("×"); break;
+            case R.id.b_div: calculator.processOperation("÷"); break;
         }
         updateCalcUI();
     }

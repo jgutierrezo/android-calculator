@@ -77,7 +77,7 @@ public class Calculator {
     private boolean containsOperator() {
 
 
-        String[] operators = {"+", "-"};
+        String[] operators = {"+", "-", "÷", "×"};
 
         return Arrays.stream(operators).anyMatch(detailsString::contains);
 
@@ -85,7 +85,6 @@ public class Calculator {
 
 
     public void processOperation(String operation) {
-        Log.d("Totoro", "Motoror");
 
         this.operation = operation;
         nextNumInScreen = "";
@@ -109,12 +108,36 @@ public class Calculator {
     }
 
     private void result() {
+
+        if(detailsString.contains("+")){
+            num1 = String.valueOf(Double.valueOf(num1) + Double.valueOf(num2));
+        }
+
+        if(detailsString.contains("-")){
+            num1 = String.valueOf(Double.valueOf(num1) - Double.valueOf(num2));
+        }
+
+        if(detailsString.contains("÷")){
+            num1 = String.valueOf(Double.valueOf(num1) / Double.valueOf(num2));
+        }
+
+        if(detailsString.contains("×")){
+            num1 = String.valueOf(Double.valueOf(num1) * Double.valueOf(num2));
+        }
+
+
+/*
         if(num1.contains(".") || num2.contains(".")){
             num1 = String.valueOf(Double.valueOf(num1) + Double.valueOf(num2));
             return;
         }
 
         num1 = String.valueOf(Integer.valueOf(num1) + Integer.valueOf(num2));
+*/
+    }
+
+    //Returns the actual result of the math operation
+    private void mathOperation(Double n1, Double n2){
 
     }
 
