@@ -3,10 +3,11 @@ package com.nseaf.mycalculator;
 import android.os.Build;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
 
-import java.time.temporal.TemporalAdjusters;
+import java.text.DecimalFormat;
 import java.util.Arrays;
 
 public class Calculator {
@@ -107,40 +108,49 @@ public class Calculator {
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void result() {
 
+        Double defFormatResult = new Double(0);
         if(detailsString.contains("+")){
-            num1 = String.valueOf(Double.valueOf(num1) + Double.valueOf(num2));
+            defFormatResult = Double.valueOf(num1) + Double.valueOf(num2);
         }
 
         if(detailsString.contains("-")){
-            num1 = String.valueOf(Double.valueOf(num1) - Double.valueOf(num2));
+            defFormatResult = Double.valueOf(num1) - Double.valueOf(num2);
         }
 
         if(detailsString.contains("÷")){
-            num1 = String.valueOf(Double.valueOf(num1) / Double.valueOf(num2));
+            defFormatResult = Double.valueOf(num1) / Double.valueOf(num2);
         }
 
         if(detailsString.contains("×")){
-            num1 = String.valueOf(Double.valueOf(num1) * Double.valueOf(num2));
+            defFormatResult = Double.valueOf(num1) * Double.valueOf(num2);
         }
 
-
-/*
-        if(num1.contains(".") || num2.contains(".")){
-            num1 = String.valueOf(Double.valueOf(num1) + Double.valueOf(num2));
-            return;
+        //Check if it has radix
+        if(defFormatResult % 1 == 0)
+            num1 = String.valueOf(defFormatResult.intValue());
+        else{
+            DecimalFormat df = new DecimalFormat();
+            df.setMaximumFractionDigits(2);
+            num1 = df.format(defFormatResult).toString();
         }
-
-        num1 = String.valueOf(Integer.valueOf(num1) + Integer.valueOf(num2));
-*/
     }
 
-    //Returns the actual result of the math operation
-    private void mathOperation(Double n1, Double n2){
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    @NonNull
+    private boolean isInteger(String strResult) {
+
+        String strAfterRadixPoint = strResult.substring(strResult.indexOf(".") + 1);
+        long timesCeroAppear =  strAfterRadixPoint.chars().filter(c -> c == '0').count();
+
+        if(strAfterRadixPoint.length() == timesCeroAppear )
+        return true;
+
+        return false;
 
     }
-
 
     public void clearClicked() {
         numberString="0";
