@@ -27,12 +27,16 @@ public class Calculator {
     String operation = "";
     String previousOperator = "";
     String nextNumInScreen = "";
+    String PI = "\uD835\uDF0B";
+    String memory = "0";
 
     public Calculator() {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void processNumber(String i) {
+
+        clean();
 
         if(numberString.length()<12) {  // limit of 12 digits
 
@@ -44,6 +48,19 @@ public class Calculator {
         }
         else
             detailsString="The number is too long..";
+    }
+
+    private void clean() {
+        if(nextNumInScreen.contains(PI)){
+            nextNumInScreen = "";
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public void piPressed() {
+        nextNumInScreen = PI;
+        updateDetailsString();
+        numberString = nextNumInScreen;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -122,7 +139,7 @@ public class Calculator {
     }
 
     private String eOperation() {
-        return getDoubleWithFormat(Math.pow(2.71828, Double.valueOf(numberString)));
+        return getDoubleWithFormat(Math.pow(2.71828, cleanValueInScreen(numberString)));
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -135,6 +152,8 @@ public class Calculator {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void result() {
+
+        prepareNumStrings();
 
         Double defFormatResult = new Double(0);
         if(detailsString.contains("+")){
@@ -151,9 +170,13 @@ public class Calculator {
         if(defFormatResult % 1 == 0)
             num1 = String.valueOf(defFormatResult.intValue());
         else{
-
             num1 = getDoubleWithFormat(defFormatResult);
         }
+    }
+
+    private void prepareNumStrings() {
+        num1 = num1.replace(PI, String.valueOf(Math.PI));
+        num2 = num2.replace(PI, String.valueOf(Math.PI));
     }
 
     private String getDoubleWithFormat(Double d){
@@ -175,22 +198,46 @@ public class Calculator {
         operation="";
         previousOperator = "";
         nextNumInScreen = "";
+        memory = "0";
     }
 
-    public void memPlusClicked() {
-        if(isIntMemory){
-            if(isIntNumber) {
-                memoryInt += intNumber;
-                detailsString = "Memory: "+memoryInt;
-            }
-            else {
-                isIntNumber=false;
-                memoryDouble = memoryInt + realNumber;
-            }
+    public void mPlus() {
+        Double doubleFormatMemory = Double.valueOf(memory);
+        Double valueToSum = cleanValueInScreen(numberString);
+        doubleFormatMemory += valueToSum;
+
+        memoryWithFormat(doubleFormatMemory);
+
+
+    }
+
+    private Double cleanValueInScreen(String screenNumStringFormat) {
+        screenNumStringFormat = screenNumStringFormat.replace(PI, String.valueOf(Math.PI));
+
+        return Double.valueOf(screenNumStringFormat);
+    }
+
+    private void memoryWithFormat(Double doubleFormatMemory) {
+        if(doubleFormatMemory % 1 == 0){
+            memory = String.valueOf(doubleFormatMemory.intValue());
+        }else{
+            memory = getDoubleWithFormat(doubleFormatMemory);
         }
     }
 
-    public void piPressed() {
-        
+    public void mMinus() {
+        Double doubleFormatMemory = Double.valueOf(memory);
+        Double valueToSum = cleanValueInScreen(numberString);
+        doubleFormatMemory -= valueToSum;
+
+        memoryWithFormat(doubleFormatMemory);
+    }
+
+    public void mC() {
+        memory = "0";
+    }
+
+    public void processPercentage() {
+
     }
 }

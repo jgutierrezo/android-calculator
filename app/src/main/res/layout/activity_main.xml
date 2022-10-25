@@ -76,6 +76,7 @@
             android:layout_margin="1dp"
             app:layout_constraintLeft_toRightOf="@id/b_m_plus"
             app:layout_constraintRight_toLeftOf="@id/b_m_r"
+            android:onClick="memMinusClicked"
             android:text="M-"
             />
         <Button
@@ -84,6 +85,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toRightOf="@id/b_m_minus"
             app:layout_constraintRight_toLeftOf="@id/b_m_c"
+            android:onClick="memRClicked"
             android:text="MR"
             />
         <Button
@@ -92,6 +94,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toRightOf="@id/b_m_r"
             app:layout_constraintRight_toRightOf="parent"
+            android:onClick="memCClicked"
             android:text="MC"
             />
 
@@ -131,6 +134,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toRightOf="@id/b_e_to_x"
             app:layout_constraintRight_toLeftOf="@id/b_div"
+            android:onClick="piClicked"
             android:text="𝜋"
             />
         <Button
@@ -299,8 +303,17 @@
             android:onClick="numberClicked"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@id/v_center_horizontal"
+            app:layout_constraintRight_toLeftOf="@id/b_percentage"
             android:text="0"
+            style="@style/style_calc_button"
+            />
+        <Button
+            android:id="@+id/b_percentage"
+            android:onClick="processPercentage"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/b_0"
+            app:layout_constraintRight_toLeftOf="@id/v_center_horizontal"
+            android:text="%"
             style="@style/style_calc_button"
             />
         <Button

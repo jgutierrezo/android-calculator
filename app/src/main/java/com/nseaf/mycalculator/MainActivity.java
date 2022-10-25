@@ -23,6 +23,11 @@ public class MainActivity extends AppCompatActivity {
         tvDetails = findViewById(R.id.tv_details);
     }
 
+    public void percentageClicked(View view){
+
+                calculator.processPercentage();
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void numberClicked(View view) {
         switch (view.getId()){
@@ -40,6 +45,15 @@ public class MainActivity extends AppCompatActivity {
 
         }
         updateCalcUI();
+    }
+
+    public void memoryClicked(View view){
+
+        switch (view.getId()) {
+            case R.id.b_m_plus:
+                calculator.mPlus();
+                break;
+        }
     }
 
 
@@ -76,7 +90,25 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void memPlusClicked(View view) {
-        calculator.memPlusClicked();
-        updateCalcUI();
+        calculator.mPlus();
+        updateCalcUIMemo();
+    }
+
+    public void memMinusClicked(View view) {
+        calculator.mMinus();
+        updateCalcUIMemo();
+    }
+
+    public void memRClicked(View view) {
+        updateCalcUIMemo();
+    }
+
+    public void memCClicked(View view) {
+        calculator.mC();
+        updateCalcUIMemo();
+    }
+
+    private void updateCalcUIMemo() {
+        tvDetails.setText("Mem: "+ calculator.memory);
     }
 }
