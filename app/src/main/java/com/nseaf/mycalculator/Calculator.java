@@ -40,7 +40,6 @@ public class Calculator {
 
         if(numberString.length()<12) {  // limit of 12 digits
 
-            //intNumber = intNumber * 10 + i;
             nextNumInScreen += i;
             updateDetailsString();
             numberString = nextNumInScreen;
@@ -133,7 +132,7 @@ public class Calculator {
             }
 
 
-        }else if(num1.isEmpty()){
+        }else if(num1.isEmpty() || previousOperator.equals("e") && !operation.equals("=")){
             detailsString += operation;
             num1 = numberString;
         }else if(previousOperator.equals("=")){
@@ -151,14 +150,15 @@ public class Calculator {
                 detailsString += " = " + num1;
             }
         }
-
-
     }
 
     public void processE() {
         String eToXResult = eOperation();
+        //num1 = eToXResult;
+        detailsString = "e^"+numberString;
         numberString = eToXResult;
-        detailsString = eToXResult;
+        num1 = eToXResult;
+        previousOperator = "e";
     }
 
     private String eOperation() {
