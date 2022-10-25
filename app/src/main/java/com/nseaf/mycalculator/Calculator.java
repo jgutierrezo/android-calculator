@@ -51,6 +51,11 @@ public class Calculator {
     }
 
     private void clean() {
+
+        if(detailsString.length()>1 && detailsString.charAt(detailsString.length()-1) == '%'){
+            detailsString = "";
+        }
+
         if(nextNumInScreen.contains(PI)){
             nextNumInScreen = "";
         }
@@ -110,13 +115,31 @@ public class Calculator {
 
         this.operation = operation;
         nextNumInScreen = "";
-        if(num1.isEmpty()){
+        if(operation.equals("%")){
+            if(detailsString.length() > 3 && containsOperator(detailsString.substring(1))){
+
+                num2 = String.valueOf(Double.valueOf(num1)*Double.valueOf(numberString)/100);
+
+                result();
+                num2 = "";
+
+                detailsString += "% = " + num1;
+
+
+            }else{
+                detailsString += operation;
+                numberString = String.valueOf(Double.valueOf(numberString)/100);
+
+            }
+
+
+        }else if(num1.isEmpty()){
             detailsString += operation;
             num1 = numberString;
         }else if(previousOperator.equals("=")){
             detailsString = numberString + " "+ operation;
             previousOperator = operation;
-        } else if(num2.isEmpty() || operation.equals("=")){
+        }else if(num2.isEmpty() || operation.equals("=")){
             if(operation.equals("="))previousOperator = "=";
             num2 = numberString;
             result();

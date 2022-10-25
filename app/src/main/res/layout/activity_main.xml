@@ -309,7 +309,7 @@
             />
         <Button
             android:id="@+id/b_percentage"
-            android:onClick="processPercentage"
+            android:onClick="operationClicked"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toRightOf="@id/b_0"
             app:layout_constraintRight_toLeftOf="@id/v_center_horizontal"

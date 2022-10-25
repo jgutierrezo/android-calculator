@@ -73,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.b_equal: calculator.processOperation("="); break;
             case R.id.b_multiply: calculator.processOperation("×"); break;
             case R.id.b_div: calculator.processOperation("÷"); break;
+            case R.id.b_percentage: calculator.processOperation("%"); break;
 
             case R.id.b_e_to_x: calculator.processE(); break;
         }
