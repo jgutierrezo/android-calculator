@@ -23,11 +23,6 @@ public class MainActivity extends AppCompatActivity {
         tvDetails = findViewById(R.id.tv_details);
     }
 
-    public void percentageClicked(View view){
-
-                calculator.processPercentage();
-    }
-
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void numberClicked(View view) {
         switch (view.getId()){

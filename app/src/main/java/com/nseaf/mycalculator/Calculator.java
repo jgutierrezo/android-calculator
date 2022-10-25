@@ -29,13 +29,14 @@ public class Calculator {
     String nextNumInScreen = "";
     String PI = "\uD835\uDF0B";
     String memory = "0";
+    Boolean clearJustPressed = false;
 
     public Calculator() {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void processNumber(String i) {
-
+        clearJustPressed = false;
         clean();
 
         if(numberString.length()<12) {  // limit of 12 digits
@@ -62,6 +63,8 @@ public class Calculator {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void piPressed() {
+        clearJustPressed = false;
+
         nextNumInScreen = PI;
         updateDetailsString();
         numberString = nextNumInScreen;
@@ -111,7 +114,7 @@ public class Calculator {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void processOperation(String operation) {
-
+        clearJustPressed = false;
         this.operation = operation;
         nextNumInScreen = "";
         if(operation.equals("%")){
@@ -153,6 +156,7 @@ public class Calculator {
     }
 
     public void processE() {
+        clearJustPressed = false;
         String eToXResult = eOperation();
         //num1 = eToXResult;
         detailsString = "e^"+numberString;
@@ -209,6 +213,15 @@ public class Calculator {
     }
 
     public void clearClicked() {
+
+        if(!clearJustPressed){
+            clearJustPressed = true;
+            numberString = "0";
+            nextNumInScreen = "";
+
+            return;
+        }
+
         numberString="0";
         detailsString="";
         intNumber=0;
@@ -225,6 +238,7 @@ public class Calculator {
     }
 
     public void mPlus() {
+        clearJustPressed = false;
         Double doubleFormatMemory = Double.valueOf(memory);
         Double valueToSum = cleanValueInScreen(numberString);
         doubleFormatMemory += valueToSum;
@@ -249,6 +263,7 @@ public class Calculator {
     }
 
     public void mMinus() {
+        clearJustPressed = false;
         Double doubleFormatMemory = Double.valueOf(memory);
         Double valueToSum = cleanValueInScreen(numberString);
         doubleFormatMemory -= valueToSum;
@@ -257,10 +272,8 @@ public class Calculator {
     }
 
     public void mC() {
+        clearJustPressed = false;
         memory = "0";
     }
 
-    public void processPercentage() {
-
-    }
 }
